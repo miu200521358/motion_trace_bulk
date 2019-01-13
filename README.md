@@ -15,17 +15,17 @@
 
 ## 準備
 
-1. 下記プログラムがそれぞれ個別に動作することを確認する
+1. 下記プログラムがそれぞれ個別に動作することを確認します
 
- - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
- - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
- - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
- - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
- - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
+     - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+     - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
+     - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
+     - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
+     - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
 
- - ※インストール手順等は各プログラムのREADMEおよびQiitaに記載
+ - ※インストール手順等は各プログラムのREADMEおよびQiitaに記載してあります
 
-2. [MotionTraceBulk.bat](MotionTraceBulk.bat) の「各種ソースコードへのディレクトリパス(相対 or 絶対)」を環境に合わせて修正する
+2. [MotionTraceBulk.bat](MotionTraceBulk.bat) の「各種ソースコードへのディレクトリパス(相対 or 絶対)」を環境に合わせて修正します
     - [MotionTraceBulk_en.bat](MotionTraceBulk_en.bat) is in English. !! The logs remain in Japanese.
     - 同じ階層にすべてのプログラムが配置されているのであれば、修正不要なはずです。
 
@@ -43,17 +43,20 @@
     - `warn` の場合、3D化アニメーションGIFも生成しない（その分早い）
     - `yes`の場合、詳細ログを出力し、ログメッセージの他、デバッグ用画像も出力される（その分遅い）
 1. 処理開始
-    以下の順番で、各プログラムが順次実行されていく。最初のパラメータ入力以降は終了まで放置可能。
-         - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
-         - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
-         - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
-         - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
-         - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
+    - 以下の順番で、各プログラムが順次実行されていく。最初のパラメータ入力以降は終了まで放置可能。
+    
+    - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+    - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
+    - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
+    - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
+    - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
+     
 1. 処理がすべて終了すると、以下に結果が出力される。
-    - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_json` ディレクトリ
-        - → json形式のkeypointsデータ
-    - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_openpose.avi`
-        - → 元映像にOpenposeの解析結果を上乗せしたaviデータ
+    - Openpose の結果
+        - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_json` ディレクトリ
+            - → json形式のkeypointsデータ
+        - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_openpose.avi`
+            - → 元映像にOpenposeの解析結果を上乗せしたaviデータ
     - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_json_3d_{実行日時}_{人物INDEX}` ディレクトリ
         - 3d-pose-baseline-vmdの結果
             - pos.txt … 全フレームの関節データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 詳細：[Output](doc/Output.md)
