@@ -12,13 +12,13 @@ set OPENPOSE_DIR=..\openpose-1.4.0-win64-gpu-binaries
 rem --- OpenposeDemo.exeのあるディレクトリパス(PortableDemo版: bin, 自前ビルド版: Release)
 set OPENPOSE_BIN_DIR=bin
 rem --- 3d-pose-baseline-vmd
-set BASELINE_DIR=..\3d-pose-baseline-vmd-kenkra
+set BASELINE_DIR=..\3d-pose-baseline-vmd
 rem -- 3dpose_gan_vmd
 set GAN_DIR=..\3dpose_gan_vmd
 rem -- FCRN-DepthPrediction-vmd
 set DEPTH_DIR=..\FCRN-DepthPrediction-vmd
 rem -- VMD-3d-pose-baseline-multi
-set VMD_DIR=..\VMD-3d-pose-baseline-multi-kenkra
+set VMD_DIR=..\VMD-3d-pose-baseline-multi
 
 cd /d %~dp0
 
