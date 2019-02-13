@@ -7,9 +7,9 @@
 以下プログラムを順次実行し、vmd(MMDモーションデータ)ファイルを生成します。
 
  - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+ - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
  - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
  - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
- - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
  - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
 
 
@@ -18,9 +18,9 @@
 1. 下記プログラムがそれぞれ個別に動作することを確認します
 
      - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+     - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
      - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
      - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
-     - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
      - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
 
  - ※インストール手順等は各プログラムのREADMEおよびQiitaに記載してあります
@@ -42,22 +42,43 @@
     - 未指定 もしくは `no` の場合、通常ログ（各パラメータファイルと3D化アニメーションGIF）
     - `warn` の場合、3D化アニメーションGIFも生成しない（その分早い）
     - `yes`の場合、詳細ログを出力し、ログメッセージの他、デバッグ用画像も出力される（その分遅い）
+1. `反転フレームリスト`が聞かれるので、Openposeが裏表を誤認識しているフレーム範囲を指定する。
+	- ここで指定されたフレーム範囲内のみ、反転判定を行う。
+	- `10,20` のように、カンマで区切って複数フレーム指定可能。
+	- `10-15` のように、ハイフンで区切った場合、その範囲内のフレームが指定可能。
+	- 詳細は[miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)参照
+1. `順番指定リスト` が聞かれるので、交差後に人物追跡が間違っている場合に、フレームNoと人物インデックスの順番を指定する。
+	- 人物インデックスは、0F目の左から0番目、1番目、と数える。
+	- `[12:1,0]` と指定された場合、12F目は、画面左から、0F目の1番目、0F目の0番目と並び替える、とする。
+	- `[12-15:1,0]` と指定された場合、12～15F目の範囲で、1番目・0番目と並び替える。
+	- 詳細は[miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)参照
 1. 処理開始
     - 以下の順番で、各プログラムが順次実行されていく。最初のパラメータ入力以降は終了まで放置可能。
     
     - [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)
+    - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
     - [miu200521358/3d-pose-baseline-vmd](https://github.com/miu200521358/3d-pose-baseline-vmd)
     - [miu200521358/3dpose_gan_vmd](https://github.com/miu200521358/3dpose_gan_vmd)
-    - [miu200521358/FCRN-DepthPrediction-vmd](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)
     - [miu200521358/VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi)
      
 1. 処理がすべて終了すると、以下に結果が出力される。
     - Openpose の結果
-        - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_json` ディレクトリ
+        - `解析対象映像ファイルパス/{解析対象映像ファイル名}_{実行日時}/{解析対象映像ファイル名}_json` ディレクトリ
             - → json形式のkeypointsデータ
-        - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_openpose.avi`
+        - `解析対象映像ファイルパス/{解析対象映像ファイル名}_{実行日時}/{解析対象映像ファイル名}_openpose.avi`
             - → 元映像にOpenposeの解析結果を上乗せしたaviデータ
-    - `解析対象映像ファイルパス/{実行日時}/{解析対象映像ファイル名}_json_3d_{実行日時}_{人物INDEX}` ディレクトリ
+    - `解析対象映像ファイルパス/{解析対象映像ファイル名}_{実行日時}/{動画ファイル名}_json_{実行日時}_depth` ディレクトリ
+	- `{動画ファイル名}_json_{実行日時}_depth`
+    	- FCRN-DepthPrediction-vmdの結果
+		    - depth.txt …　各関節位置の深度推定値リスト
+		    - message.log …　出力順番等、パラメーター指定情報の出力ログ
+		    - movie_depth.gif　…　深度推定の合成アニメーションGIF
+		        - 白い点が関節位置として取得したポイントになる
+		    - depth/depth_0000000000xx.png … 各フレームの深度推定結果
+		    - ※複数人数のトレースを行った場合、全員分の深度情報が出力される
+    - `解析対象映像ファイルパス/{解析対象映像ファイル名}_{実行日時}/{動画ファイル名}_json_{実行日時}_index{0F目の左からの順番}` ディレクトリ
+    	- FCRN-DepthPrediction-vmdの結果
+		    - depth.txt …　該当人物の各関節位置の深度推定値リスト
         - 3d-pose-baseline-vmdの結果
             - pos.txt … 全フレームの関節データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 詳細：[Output](doc/Output.md)
             - smoothed.txt … 全フレームの2D位置データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 詳細：[Output](doc/Output.md)
@@ -71,11 +92,6 @@
             - movie_smoothing_gan.gif … フレームごとの姿勢を結合したアニメーションGIF
             - frame3d_gan/gan_0000000000xx.png … 各フレームの3D姿勢
             - frame3d_gan/gan_0000000000xx_xxx.png … 各フレームの角度別3D姿勢(詳細ログyes時のみ)
-        - FCRN-DepthPrediction-vmdの結果
-            - depth.txt …　腰位置の深度推定値リスト
-            - movie_depth.gif　…　深度推定の合成アニメーションGIF
-                - 白い点が腰、足首位置として取得したポイントになる
-            - depth/depth_0000000000xx.png … 各フレームの深度推定結果
         - VMD-3d-pose-baseline-multiの結果
             - output_{日付}_{時間}_u{直立フレームIDX}_h{踵位置補正}_xy{センターXY移動倍率}_z{センターZ移動倍率}_s{円滑化度数}_p{移動キー間引き量}_r{回転キー間引き角度}_full/reduce.vmd
                 - キーフレームの間引きなしの場合、末尾は「full」。アリの場合、「reduce」。
@@ -114,9 +130,9 @@ LICENCE
 モーショントレース自動化キット
 【Openpose】：CMU　…　https://github.com/CMU-Perceptual-Computing-Lab/openpose
 【Openpose起動バッチ】：miu200521358　…　https://github.com/miu200521358/openpose-simple
+【深度推定】：Iro Laina, miu200521358　…　https://github.com/miu200521358/FCRN-DepthPrediction-vmd
 【Openpose→3D変換】：una-dinosauria, ArashHosseini, miu200521358　…　https://github.com/miu200521358/3d-pose-baseline-vmd
 【Openpose→3D変換その2】：Dwango Media Village, miu200521358：MIT　…　https://github.com/miu200521358/3dpose_gan_vmd
-【深度推定】：Iro Laina, miu200521358　…　https://github.com/miu200521358/FCRN-DepthPrediction-vmd
 【3D→VMD変換】： errno-mmd, miu200521358 　…　https://github.com/miu200521358/VMD-3d-pose-baseline-multi
 ```
 
