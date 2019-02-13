@@ -1,6 +1,7 @@
 @echo off
 rem --- 
 rem ---  映像データから各種トレースデータを揃えてvmdを生成する
+rem --- Openpose が取得できている場合(FCRN以降実施)
 rem --- 
 
 rem -----------------------------------
@@ -19,9 +20,10 @@ set DEPTH_DIR=..\FCRN-DepthPrediction-vmd
 rem -- VMD-3d-pose-baseline-multi
 set VMD_DIR=..\VMD-3d-pose-baseline-multi
 
-rem -- Openpose 実行
+
+rem -- Openpose 後処理実行
 cd /d %~dp0
-call BulkOpenpose.bat
+call BulkOpenposeAfter.bat
 
 echo BULK OUTPUT_JSON_DIR: %OUTPUT_JSON_DIR%
 

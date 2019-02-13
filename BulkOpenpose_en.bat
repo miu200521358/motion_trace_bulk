@@ -40,6 +40,15 @@ echo If you specify only one person in the image of which the number of people i
 set NUMBER_PEOPLE_MAX=1
 set /P NUMBER_PEOPLE_MAX="** Maximum number of people shown in the image:"
 
+rem ---  Flip frame list
+echo --------------
+set REVERSE_FRAME_LIST=
+echo Please specify the frame number (0 start) that Openpose misrecognized and flipped.
+echo A reversing judgment is made for the frame with the number specified here, and if reverse verification is done, the joint position will be reversed.
+echo Multiple items can be specified with a comma. In addition, the range can be specified with a hyphen.
+echo Ex.) 4,10-12 ... 4,10,11,12 are the inverted judgment target frame.
+set /P REVERSE_FRAME_LIST="** Flip frame list: "
+
 rem ---  Presence of detailed log
 
 echo --------------
