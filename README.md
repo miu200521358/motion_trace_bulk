@@ -145,9 +145,9 @@ MMDモーショントレース自動化キット
 【Openpose】：CMU　…　https://github.com/CMU-Perceptual-Computing-Lab/openpose
 【Openpose起動バッチ】：miu200521358　…　https://github.com/miu200521358/openpose-simple
 【深度推定】：Iro Laina, miu200521358　…　https://github.com/miu200521358/FCRN-DepthPrediction-vmd
-【Openpose→3D変換】：una-dinosauria, ArashHosseini, miu200521358　…　https://github.com/miu200521358/3d-pose-baseline-vmd
+【Openpose→3D変換】：una-dinosauria, ArashHosseini, miu200521358, kenkra　…　https://github.com/miu200521358/3d-pose-baseline-vmd
 【Openpose→3D変換その2】：Dwango Media Village, miu200521358：MIT　…　https://github.com/miu200521358/3dpose_gan_vmd
-【3D→VMD変換】： errno-mmd, miu200521358 　…　https://github.com/miu200521358/VMD-3d-pose-baseline-multi
+【3D→VMD変換】： errno-mmd, miu200521358, kenkra 　…　https://github.com/miu200521358/VMD-3d-pose-baseline-multi
 ```
 
 ### 以下の行為はご遠慮願います
