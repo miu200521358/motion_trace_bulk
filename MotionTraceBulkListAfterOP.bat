@@ -96,7 +96,7 @@ for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
         call Bulk3dPoseBaseline.bat
         
         rem -- 3dpose_gané¿çs
-        call Bulk3dPoseGan.bat
+        rem call Bulk3dPoseGan.bat
 
         rem -- VMD-3d-pose-baseline-multi é¿çs
         call BulkVmd.bat

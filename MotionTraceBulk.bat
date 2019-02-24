@@ -54,7 +54,7 @@ for /L %%i in (1,1,%NUMBER_PEOPLE_MAX%) do (
     call Bulk3dPoseBaseline.bat
     
     rem -- 3dpose_gané¿çs
-    call Bulk3dPoseGan.bat
+    rem call Bulk3dPoseGan.bat
 
     rem -- VMD-3d-pose-baseline-multi é¿çs
     call BulkVmd.bat

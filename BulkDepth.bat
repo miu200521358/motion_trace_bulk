@@ -12,7 +12,7 @@ cd /d %~dp0
 cd /d %DEPTH_DIR%
 
 rem ---  python é¿çs
-python tensorflow/predict_video.py --model_path tensorflow/data/NYU_FCRN.ckpt --video_path %INPUT_VIDEO% --json_path %OUTPUT_JSON_DIR% --interval 10 --reverse_frames "%REVERSE_FRAME_LIST%" --order_specific "%ORDER_SPECIFIC_LIST%" --verbose %VERBOSE% --now %DTTM%
+python tensorflow/predict_video.py --model_path tensorflow/data/NYU_FCRN.ckpt --video_path %INPUT_VIDEO% --json_path %OUTPUT_JSON_DIR% --interval 10 --reverse_frames "%REVERSE_FRAME_LIST%" --order_specific "%ORDER_SPECIFIC_LIST%" --verbose %VERBOSE% --now %DTTM%  --avi_output yes
 
 cd /d %~dp0
 
