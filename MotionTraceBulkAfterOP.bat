@@ -3,6 +3,7 @@ rem ---
 rem ---  映像データから各種トレースデータを揃えてvmdを生成する
 rem --- Openpose が取得できている場合(FCRN以降実施)
 rem --- 
+cls
 
 rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
@@ -56,7 +57,7 @@ for /L %%i in (1,1,%NUMBER_PEOPLE_MAX%) do (
     call Bulk3dPoseBaseline.bat
     
     rem -- 3dpose_gan実行
-    call Bulk3dPoseGan.bat
+    rem call Bulk3dPoseGan.bat
 
     rem -- VMD-3d-pose-baseline-multi 実行
     call BulkVmd.bat

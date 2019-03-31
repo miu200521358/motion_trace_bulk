@@ -3,6 +3,7 @@ rem ---
 rem ---  映像データから各種トレースデータを揃えてvmdを生成する
 rem ---  複数映像対応バージョン
 rem --- 
+cls
 
 rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
@@ -36,14 +37,15 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-6 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo Input target video file path: %%m
     echo Frame number to start analysis: %%n
     echo Maximum number of people in the image: %%o
     echo Detailed log[yes/no/warn]: %%p
-    echo Flip frame list: %%q
-    echo Sequential list: %%r
+    echo Analysis end frame number: %%q
+    echo Reverse specification list: %%r
+    echo Sequential list: %%s
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -51,8 +53,9 @@ for /f "tokens=1-6 skip=1" %%m in (%TARGET_LIST%) do (
     set NUMBER_PEOPLE_MAX=%%o
     set VERBOSE=2
     set IS_DEBUG=%%p
-    set REVERSE_FRAME_LIST=%%q
-    set ORDER_SPECIFIC_LIST=%%r
+    set FRAME_END=%%q
+    set REVERSE_SPECIFIC_LIST=%%r
+    set ORDER_SPECIFIC_LIST=%%s
         
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3
@@ -99,7 +102,7 @@ for /f "tokens=1-6 skip=1" %%m in (%TARGET_LIST%) do (
         call Bulk3dPoseBaseline.bat
         
         rem -- 3dpose_gan実行
-        call Bulk3dPoseGan.bat
+        rem call Bulk3dPoseGan.bat
 
         rem -- VMD-3d-pose-baseline-multi 実行
         call BulkVmd.bat

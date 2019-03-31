@@ -45,7 +45,7 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     echo 詳細ログ[yes/no/warn]: %%p
     echo 解析を終了するフレーム: %%q
     echo Openpose解析結果JSONディレクトリパス: %%r
-    echo 反転指定リスト%%s
+    echo 反転指定リスト: %%s
     echo 順番指定リスト: %%t
     
     rem --- パラメーター保持
@@ -90,20 +90,6 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     
     rem -- FCRN-DepthPrediction-vmd実行
     call BulkDepth.bat
-
-    rem -- キャプチャ人数分ループを回す
-    for /L %%i in (1,1,!NUMBER_PEOPLE_MAX!) do (
-        set IDX=%%i
-        
-        rem -- 3d-pose-baseline実行
-        call Bulk3dPoseBaseline.bat
-        
-        rem -- 3dpose_gan実行
-        rem call Bulk3dPoseGan.bat
-
-        rem -- VMD-3d-pose-baseline-multi 実行
-        call BulkVmd.bat
-    )
 
     echo ------------------------------------------
     echo トレース結果
