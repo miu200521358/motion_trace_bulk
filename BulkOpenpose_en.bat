@@ -40,14 +40,41 @@ echo If you specify only one person in the image of which the number of people i
 set NUMBER_PEOPLE_MAX=1
 set /P NUMBER_PEOPLE_MAX="** Maximum number of people shown in the image:"
 
-rem ---  Flip frame list
+rem ---  Frame to end analysis
+
 echo --------------
-set REVERSE_FRAME_LIST=
-echo Please specify the frame number (0 start) that Openpose misrecognized and flipped.
-echo A reversing judgment is made for the frame with the number specified here, and if reverse verification is done, the joint position will be reversed.
-echo Multiple items can be specified with a comma. In addition, the range can be specified with a hyphen.
-echo Ex.) 4,10-12 ... 4,10,11,12 are the inverted judgment target frame.
-set /P REVERSE_FRAME_LIST="** Flip frame list: "
+echo Please enter the frame number to end analysis. (0 beginning)
+echo When you adjust the reverse or order, 
+echo you can finish the process and see the result without outputting to the end.
+echo If nothing is input and ENTER is pressed, analysis is performed to the end.
+set FRAME_END=-1
+set /P FRAME_END="** Analysis end frame number: "
+
+rem ---  反転指定リスト
+echo --------------
+set REVERSE_SPECIFIC_LIST=
+echo Specify the frame number (0 starting) that is inverted by Openpose by mistake, the person INDEX order, and the contents of the inversion.
+echo In the order that Openpose recognizes at 0F, INDEX is assigned as 0, 1, ....
+echo Format: [{frame number}: Person who wants to specify reverse INDEX, {reverse content}]
+echo {reverse content}: R: Whole body inversion, U: Upper body inversion, L: Lower body inversion, N: No inversion
+echo 例）[10:1,R]　…　The whole person flips the first person in the 10th frame.
+echo Since the contents are output in the above format in message.log when inverted output, please refer to that.
+echo As in [10:1,R][30:0,U], multiple items can be specified in parentheses.
+set /P REVERSE_SPECIFIC_LIST="** Reverse specification list: "
+
+rem ---  順番指定リスト
+echo --------------
+set ORDER_SPECIFIC_LIST=
+echo In the multi-person trace, please specify the person INDEX order after crossing.
+echo In the case of a one-person trace, it is OK to leave it blank.
+echo In the order that Openpose recognizes at 0F, INDEX is assigned as 0, 1, ....
+echo Format: [{frame number}: index of first estimated person, index of first estimated person, ...]
+echo 例）[10:1,0]　…　The order of the 10th frame is rearranged in the order of the first person from the left and the zeroth person.
+echo The order in which messages are output in message.log is left in the above format, so please refer to it.
+echo As in [10:1,0][30:0,1], multiple items can be specified in parentheses.
+echo Also, in output_XXX.avi, colors are assigned to people in the estimated order. The right half of the body is red and the left half is the following color.
+echo 0: green, 1: blue, 2: white, 3: yellow, 4: peach, 5: light blue, 6: dark green, 7: dark blue, 8: gray, 9: dark yellow, 10: dark peach, 11: dark light blue
+set /P ORDER_SPECIFIC_LIST="** Ordered list: "
 
 rem ---  Presence of detailed log
 

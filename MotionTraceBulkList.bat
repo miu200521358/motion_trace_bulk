@@ -3,6 +3,7 @@ rem ---
 rem ---  映像データから各種トレースデータを揃えてvmdを生成する
 rem ---  複数映像対応バージョン
 rem --- 
+cls
 
 rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
@@ -36,14 +37,15 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-6 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo 入力対象映像ファイルパス: %%m
     echo 解析を開始するフレーム: %%n
     echo 映像に映っている最大人数: %%o
     echo 詳細ログ[yes/no/warn]: %%p
-    echo 反転フレームリスト: %%q
-    echo 順番指定リスト: %%r
+    echo 解析を終了するフレーム: %%q
+    echo 反転指定リスト%%r
+    echo 順番指定リスト: %%s
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -51,8 +53,9 @@ for /f "tokens=1-6 skip=1" %%m in (%TARGET_LIST%) do (
     set NUMBER_PEOPLE_MAX=%%o
     set VERBOSE=2
     set IS_DEBUG=%%p
-    set REVERSE_FRAME_LIST=%%q
-    set ORDER_SPECIFIC_LIST=%%r
+    set FRAME_END=%%q
+    set REVERSE_SPECIFIC_LIST=%%r
+    set ORDER_SPECIFIC_LIST=%%s
         
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3

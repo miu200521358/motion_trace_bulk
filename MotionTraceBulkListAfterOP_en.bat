@@ -3,6 +3,7 @@ rem ---
 rem ---  映像データから各種トレースデータを揃えてvmdを生成する
 rem ---  複数映像対応バージョン
 rem --- 
+cls
 
 rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
@@ -36,15 +37,16 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo Input target video file path: %%m
     echo Frame number to start analysis: %%n
     echo Maximum number of people in the image: %%o
     echo Detailed log[yes/no/warn]: %%p
-    echo Openpose analysis result JSON directory path: %%q
-    echo Flip frame list: %%r
-    echo Sequential list: %%s
+    echo Analysis end frame number: %%q
+    echo Openpose analysis result JSON directory path: %%r
+    echo Reverse specification list: %%s
+    echo Sequential list: %%t
 
     
     rem --- パラメーター保持
@@ -53,9 +55,10 @@ for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
     set NUMBER_PEOPLE_MAX=%%o
     set VERBOSE=2
     set IS_DEBUG=%%p
-    set OUTPUT_JSON_DIR=%%q
-    set REVERSE_FRAME_LIST=%%r
-    set ORDER_SPECIFIC_LIST=%%s
+    set FRAME_END=%%q
+    set OUTPUT_JSON_DIR=%%r
+    set REVERSE_SPECIFIC_LIST=%%s
+    set ORDER_SPECIFIC_LIST=%%t
     
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3

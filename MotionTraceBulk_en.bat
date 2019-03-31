@@ -2,6 +2,7 @@
 rem --- 
 rem ---  Generate vmd by aligning various trace data from video data
 rem --- 
+cls
 
 rem -----------------------------------
 rem Directory path to various source code (relative or absolute)
