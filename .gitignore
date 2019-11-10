@@ -4,3 +4,6 @@ result/
 -p/
 list*.txt
 *~
+
+openpose.log
+openpose_past.log

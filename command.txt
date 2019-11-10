@@ -1,0 +1,30 @@
+conda create -n motiontrace_201911 pip python=3.6
+
+# Openpose -------------------------
+
+なし
+
+# 3d-pose-baseline-vmd ---------------
+# 先にこっち
+
+conda install tensorflow-gpu==1.14.0
+
+# 深度推定 -------------------------
+
+https://pytorch.org/get-started/locally/
+
+conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+
+conda install scikit-image h5py opencv pillow
+
+# データDL
+
+fetch_checkpoints.sh
+
+fetch_davis_data.sh
+
+# VMD-3d-pose-baseline-multi ---------------
+# Anacondaにはない？
+
+pip install PyQt5
+
