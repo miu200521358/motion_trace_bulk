@@ -12,7 +12,7 @@ cd /d %~dp0
 cd /d %VMD_DIR%
 
 rem ---  python 実行
-python main.py -v %VERBOSE% -t "%OUTPUT_SUB_DIR%" -b "born\あにまさ式ミク準標準ボーン.csv" -c 30 -z 50 -s 2 -p 0.5 -r 5 -k 1 -e 0
+python main.py -v %VERBOSE% -t "%OUTPUT_SUB_DIR%" -b "born\あにまさ式ミク準標準ボーン.csv" -c 30 -z 2 -s 1 -p 0.5 -r 5 -k 1 -e 0
 
 cd /d %~dp0
 
