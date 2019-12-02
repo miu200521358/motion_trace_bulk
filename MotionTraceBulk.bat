@@ -44,6 +44,8 @@ set TM2=%TM: =0%
 rem -- 実行日時をファイル名用に置換
 set DTTM=%dt:~0,4%%dt:~5,2%%dt:~8,2%_%TM2:~0,2%%TM2:~3,2%%TM2:~6,2%
 
+set PAST_DEPTH_PATH=
+
 rem -- mannequinchallenge-vmd実行
 call BulkDepth.bat
 
