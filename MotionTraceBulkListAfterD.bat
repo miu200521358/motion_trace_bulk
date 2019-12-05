@@ -37,7 +37,7 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-10 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo 入力対象映像ファイルパス: %%m
     echo 解析を開始するフレーム: %%n
@@ -48,6 +48,7 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
     echo 深度推定結果ディレクトリパス: %%s
     echo 反転指定リスト%%t
     echo 順番指定リスト: %%u
+    echo ソート開始フレーム: %%v
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -60,6 +61,7 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
     set PAST_DEPTH_PATH=%%s
     set REVERSE_SPECIFIC_LIST=%%t
     set ORDER_SPECIFIC_LIST=%%u
+    set ORDER_START_FRAME=%%v
     
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3
@@ -67,6 +69,10 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
 
     IF /I "!IS_DEBUG!" EQU "warn" (
         set VERBOSE=1
+    )
+
+    IF /I "!ORDER_START_FRAME!" EQU "" (
+        set ORDER_START_FRAME=0
     )
 
     rem -- 実行日付
