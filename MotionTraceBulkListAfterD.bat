@@ -9,15 +9,15 @@ rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
 rem -----------------------------------
 rem --- Openpose
-set OPENPOSE_DIR=..\openpose-1.4.0-win64-gpu-binaries
+set OPENPOSE_DIR=..\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose
 rem --- OpenposeDemo.exeのあるディレクトリパス(PortableDemo版: bin, 自前ビルド版: Release)
 set OPENPOSE_BIN_DIR=bin
 rem --- 3d-pose-baseline-vmd
 set BASELINE_DIR=..\3d-pose-baseline-vmd
 rem -- 3dpose_gan_vmd
 set GAN_DIR=..\3dpose_gan_vmd
-rem -- FCRN-DepthPrediction-vmd
-set DEPTH_DIR=..\FCRN-DepthPrediction-vmd
+rem -- mannequinchallenge-vmd
+set DEPTH_DIR=..\mannequinchallenge-vmd
 rem -- VMD-3d-pose-baseline-multi
 set VMD_DIR=..\VMD-3d-pose-baseline-multi
 
@@ -37,7 +37,7 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-10 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo 入力対象映像ファイルパス: %%m
     echo 解析を開始するフレーム: %%n
@@ -48,6 +48,7 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
     echo 深度推定結果ディレクトリパス: %%s
     echo 反転指定リスト%%t
     echo 順番指定リスト: %%u
+    echo ソート開始フレーム: %%v
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -60,6 +61,7 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
     set PAST_DEPTH_PATH=%%s
     set REVERSE_SPECIFIC_LIST=%%t
     set ORDER_SPECIFIC_LIST=%%u
+    set ORDER_START_FRAME=%%v
     
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3
@@ -67,6 +69,10 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
 
     IF /I "!IS_DEBUG!" EQU "warn" (
         set VERBOSE=1
+    )
+
+    IF /I "!ORDER_START_FRAME!" EQU "" (
+        set ORDER_START_FRAME=0
     )
 
     rem -- 実行日付
@@ -90,7 +96,7 @@ for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
         set OUTPUT_JSON_DIR_NAME=%%~ni
     )
     
-    rem -- FCRN-DepthPrediction-vmd実行
+    rem -- mannequinchallenge-vmd実行
     call BulkDepth.bat
 
     rem -- キャプチャ人数分ループを回す

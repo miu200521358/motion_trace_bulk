@@ -37,7 +37,7 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-9 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo 入力対象映像ファイルパス: %%m
     echo 解析を開始するフレーム: %%n
@@ -45,8 +45,9 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     echo 詳細ログ[yes/no/warn]: %%p
     echo 解析を終了するフレーム: %%q
     echo Openpose解析結果JSONディレクトリパス: %%r
-    echo 反転指定リスト: %%s
-    echo 順番指定リスト: %%t
+    echo 深度推定結果ディレクトリパス: %%s
+    echo 反転指定リスト%%t
+    echo 順番指定リスト: %%u
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -56,8 +57,9 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     set IS_DEBUG=%%p
     set FRAME_END=%%q
     set OUTPUT_JSON_DIR=%%r
-    set REVERSE_SPECIFIC_LIST=%%s
-    set ORDER_SPECIFIC_LIST=%%t
+    set PAST_DEPTH_PATH=%%s
+    set REVERSE_SPECIFIC_LIST=%%t
+    set ORDER_SPECIFIC_LIST=%%u
     
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3
@@ -66,15 +68,9 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     IF /I "!IS_DEBUG!" EQU "warn" (
         set VERBOSE=1
     )
-
-    rem -- 実行日付
-    set DT=!date!
-    rem -- 実行時間
-    set TM=!time!
-    rem -- 時間の空白を0に置換
-    set TM2=!time: =0!
-    rem -- 実行日時をファイル名用に置換
-    set DTTM=!DT:~0,4!!DT:~5,2!!DT:~8,2!_!TM2:~0,2!!TM2:~3,2!!TM2:~6,2!
+    
+    rem -- depthを除く
+    set DTTM=!PAST_DEPTH_PATH:~-22,-7!
     
     echo now: !DTTM!
     echo verbose: !VERBOSE!
@@ -88,8 +84,19 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
         set OUTPUT_JSON_DIR_NAME=%%~ni
     )
     
-    rem -- mannequinchallenge-vmd実行
-    call BulkDepth.bat
+    rem -- キャプチャ人数分ループを回す
+    for /L %%i in (1,1,!NUMBER_PEOPLE_MAX!) do (
+        set IDX=%%i
+        
+        rem -- 3d-pose-baseline実行
+        call Bulk3dPoseBaseline.bat
+        
+        rem -- 3dpose_gan実行
+        rem call Bulk3dPoseGan.bat
+
+        rem -- VMD-3d-pose-baseline-multi 実行
+        call BulkVmd.bat
+    )
 
     echo ------------------------------------------
     echo トレース結果

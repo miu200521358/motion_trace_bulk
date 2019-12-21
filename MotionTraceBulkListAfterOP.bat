@@ -9,15 +9,15 @@ rem -----------------------------------
 rem 各種ソースコードへのディレクトリパス(相対 or 絶対)
 rem -----------------------------------
 rem --- Openpose
-set OPENPOSE_DIR=..\openpose-1.4.0-win64-gpu-binaries
+set OPENPOSE_DIR=..\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose
 rem --- OpenposeDemo.exeのあるディレクトリパス(PortableDemo版: bin, 自前ビルド版: Release)
 set OPENPOSE_BIN_DIR=bin
 rem --- 3d-pose-baseline-vmd
 set BASELINE_DIR=..\3d-pose-baseline-vmd
 rem -- 3dpose_gan_vmd
 set GAN_DIR=..\3dpose_gan_vmd
-rem -- FCRN-DepthPrediction-vmd
-set DEPTH_DIR=..\FCRN-DepthPrediction-vmd
+rem -- mannequinchallenge-vmd
+set DEPTH_DIR=..\mannequinchallenge-vmd
 rem -- VMD-3d-pose-baseline-multi
 set VMD_DIR=..\VMD-3d-pose-baseline-multi
 
@@ -88,7 +88,7 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
         set OUTPUT_JSON_DIR_NAME=%%~ni
     )
     
-    rem -- FCRN-DepthPrediction-vmd実行
+    rem -- mannequinchallenge-vmd実行
     call BulkDepth.bat
 
     rem -- キャプチャ人数分ループを回す

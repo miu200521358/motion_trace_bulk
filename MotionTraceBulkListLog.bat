@@ -23,7 +23,7 @@ set VMD_DIR=..\VMD-3d-pose-baseline-multi
 
 cd /d %~dp0
 
-rem ---  入力対象パラメーターファイルパス
+rem ---  入力対象映像ファイルパス
 echo 解析対象となるパラメーター設定リストファイルのフルパスを入力して下さい。
 echo この設定は半角英数字のみ設定可能で、必須項目です。
 set TARGET_LIST=
@@ -37,16 +37,15 @@ IF /I "%TARGET_LIST%" EQU "" (
 
 SETLOCAL enabledelayedexpansion
 rem -- ファイル内をループして全件処理する
-for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
+for /f "tokens=1-7 skip=1" %%m in (%TARGET_LIST%) do (
     echo ------------------------------
     echo 入力対象映像ファイルパス: %%m
     echo 解析を開始するフレーム: %%n
     echo 映像に映っている最大人数: %%o
     echo 詳細ログ[yes/no/warn]: %%p
     echo 解析を終了するフレーム: %%q
-    echo Openpose解析結果JSONディレクトリパス: %%r
-    echo 反転指定リスト: %%s
-    echo 順番指定リスト: %%t
+    echo 反転指定リスト%%r
+    echo 順番指定リスト: %%s
     
     rem --- パラメーター保持
     set INPUT_VIDEO=%%m
@@ -55,10 +54,9 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     set VERBOSE=2
     set IS_DEBUG=%%p
     set FRAME_END=%%q
-    set OUTPUT_JSON_DIR=%%r
-    set REVERSE_SPECIFIC_LIST=%%s
-    set ORDER_SPECIFIC_LIST=%%t
-    
+    set REVERSE_SPECIFIC_LIST=%%r
+    set ORDER_SPECIFIC_LIST=%%s
+        
     IF /I "!IS_DEBUG!" EQU "yes" (
         set VERBOSE=3
     )
@@ -77,7 +75,16 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     set DTTM=!DT:~0,4!!DT:~5,2!!DT:~8,2!_!TM2:~0,2!!TM2:~3,2!!TM2:~6,2!
     
     echo now: !DTTM!
-    echo verbose: !VERBOSE!
+    
+    echo ★Openpose開始: !date! !time! 1>> openpose.log 2>>&1
+    
+    rem -- Openpose 実行(質問なし)
+    cd /d %~dp0
+    call BulkOpenposeSilent.bat 1>> openpose.log 2>>&1
+
+    echo BULK OUTPUT_JSON_DIR: !OUTPUT_JSON_DIR!
+
+    echo ★Openpose終了: !date! !time! 1>> openpose.log 2>>&1
 
     cd /d %~dp0
 
@@ -90,6 +97,20 @@ for /f "tokens=1-8 skip=1" %%m in (%TARGET_LIST%) do (
     
     rem -- mannequinchallenge-vmd実行
     call BulkDepth.bat
+
+    rem -- キャプチャ人数分ループを回す
+    for /L %%i in (1,1,!NUMBER_PEOPLE_MAX!) do (
+        set IDX=%%i
+        
+        rem -- 3d-pose-baseline実行
+        call Bulk3dPoseBaseline.bat
+        
+        rem -- 3dpose_gan実行
+        rem call Bulk3dPoseGan.bat
+
+        rem -- VMD-3d-pose-baseline-multi 実行
+        call BulkVmd.bat
+    )
 
     echo ------------------------------------------
     echo トレース結果
